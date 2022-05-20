@@ -1,0 +1,55 @@
+/*---Root & All---*/
+:root {
+  --bg-color-dark: radial-gradient(#292929, #191818);
+  --header-color-dark: linear-gradient(#979797, #4e4e4e);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*---Main---*/
+.taskboard-main {
+  height: 100vh;
+  width: 100vw;
+  background: var(--bg-color-dark);
+}
+
+/*---Header---*/
+.taskboard-header {
+  height: 88px;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  font-size: 16px;
+  padding: 0 30px;
+  background: var(--header-color-dark);
+}
+
+.logo-container,
+.info-bg-container {
+  display: inline-flex;
+  height: 100%;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-family: "Rubik";
+  font-weight: 700;
+  font-size: 1.35em;
+  color: white;
+  margin-top: 3px;
+}
+
+.info-icon {
+  margin-right: 20px;
+}
