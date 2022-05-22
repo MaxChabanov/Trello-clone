@@ -2,6 +2,12 @@
 :root {
   --bg-color-dark: radial-gradient(#292929, #191818);
   --header-color-dark: linear-gradient(#979797, #4e4e4e);
+  --white-default: hsl(228deg, 14%, 93%);
+  --title-color: hsl(218, 54%, 20%);
+  --green-default: hsl(146deg 100% 35%);
+  --green-dark: hsl(146deg 100% 28%);
+  --green-darker: hsl(146deg 100% 24%);
+  --btn-transition: 200ms;
 }
 
 * {
@@ -10,16 +16,22 @@
   box-sizing: border-box;
 }
 
+input,
+button {
+  outline: none;
+}
+
 /*---Main---*/
 .taskboard-main {
   height: 100vh;
   width: 100vw;
+  padding-top: 80px;
   background: var(--bg-color-dark);
 }
 
 /*---Header---*/
 .taskboard-header {
-  height: 88px;
+  height: 80px;
   width: 100vw;
   display: flex;
   justify-content: space-between;
@@ -52,4 +64,61 @@
 
 .info-icon {
   margin-right: 20px;
+}
+
+/*---Create list---*/
+.create-list-container {
+  flex-direction: column;
+  display: inline-flex;
+  margin: 50px 0 0 20px;
+  background: var(--white-default);
+  padding: 5px;
+  border-radius: 5px;
+
+  /*!!!TEMPORARY!!!*/
+  display: none;
+}
+.create-list-btn {
+  width: 85px;
+  border: none;
+  background-color: hsl(146deg 100% 36%);
+  border-radius: 2px;
+  height: 35px;
+  color: white;
+  font-size: 0.95em;
+  margin-top: 5px;
+  cursor: pointer;
+  transition: var(--btn-transition);
+}
+.create-list-btn:hover {
+  background-color: var(--green-dark);
+}
+.create-list-btn:active {
+  background-color: var(--green-darker);
+}
+.create-list-input {
+  box-shadow: inset 0 0 0 3px hsl(146deg 100% 36%);
+  border: none;
+  border-radius: 3px;
+  padding: 15px;
+  height: 40px;
+  width: 320px;
+}
+
+/* ---Lists--- */
+.list {
+  display: inline-flex;
+  flex-direction: column;
+  min-height: 80px;
+  background-color: var(--white-default);
+  border-radius: 10px;
+  padding: 21px 17px;
+  margin: 50px 0 0 20px;
+}
+
+.list-title {
+  font-family: "Rubik";
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--title-color);
 }

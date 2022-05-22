@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TaskUp</title>
-    <link rel="icon" href="assets/logo.png" />
+    <link rel="icon" href="assets/logo.svg" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
 
     <!--Fonts-->
@@ -31,7 +31,30 @@
     </header>
 
     <!--Main-->
-    <main class="taskboard-main"></main>
+    <main class="taskboard-main">
+      <div class="create-list-container">
+        <input
+          type="text"
+          class="create-list-input"
+          placeholder="Enter list title"
+        />
+        <button class="create-list-btn">Add list</button>
+      </div>
+
+      <div class="list">
+        <p class="list-title">Needs to be done</p>
+
+        <div class="card">
+          <span>Task 1</span>
+          <span>Task 2</span>
+          <span>Task 3</span>
+          <span>Task 4</span>
+          <span>Task 5</span>
+        </div>
+
+        <button><span>+</span> Add new card</button>
+      </div>
+    </main>
   </body>
 
   <script type="text/javascript" src="script.js"></script>
