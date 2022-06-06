@@ -52,7 +52,6 @@ button {
   height: 100%;
   align-items: center;
   user-select: none;
-  touch-action: none;
 }
 
 .logo {
@@ -68,13 +67,11 @@ button {
   color: white;
   margin-top: 3px;
   user-select: none;
-  touch-action: none;
 }
 
 .info-icon {
   margin-right: 20px;
   user-select: none;
-  touch-action: none;
 }
 
 /*---Create list---*/
@@ -129,7 +126,7 @@ button {
   margin-left: 8px;
   cursor: pointer;
   user-select: none;
-  touch-action: none;
+
   filter: contrast(0.5);
   transition: calc(var(--default-transition) - 100ms);
 }
@@ -214,7 +211,6 @@ button {
   font-size: 16px;
   font-weight: 400;
   user-select: none;
-  touch-action: none;
 }
 
 .add-new-card {
@@ -226,7 +222,6 @@ button {
   padding: 7px;
   transition: var(--default-transition);
   border-radius: 2px;
-  touch-action: none;
 
   color: hsl(218, 20%, 40%);
   cursor: pointer;
@@ -249,7 +244,7 @@ button {
   margin-top: 0.5px;
   opacity: 0;
   user-select: none;
-  touch-action: none;
+
   transition: calc(var(--default-transition) - 70ms);
 }
 .card:hover > .card-edit {
