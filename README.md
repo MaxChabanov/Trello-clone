@@ -1,2 +1,0 @@
-# TaskUp
-A taskboard project
