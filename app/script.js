@@ -1,5 +1,7 @@
-var jsdom = require("jsdom").jsdom;
-global.$ = require("jquery/dist/jquery")(jsdom().createWindow());
-$(function () {
-  alert("Your book is overdue.");
+$(".cards-container").sortable({
+  connectWith: ".cards-container",
+  cursor: "grabbing",
+  revert: true,
+  revertDuration: 70,
+  scroll: false,
 });
