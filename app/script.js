@@ -27,7 +27,6 @@ $(".add-new-card").click(function (event) {
 $(".create-card-btn").click(function (event) {
   let listId = event.target.id.slice(-1);
 
-  console.log(`#create-card-input${listId}`);
   let cardName = $(`#create-card-input${listId}`).val();
 
   if (cardName) {
