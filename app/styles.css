@@ -5,8 +5,8 @@
   --white-default: hsl(228deg, 14%, 93%);
   --title-color: hsl(218, 54%, 20%);
   --green-default: hsl(146deg 100% 35%);
-  --green-dark: hsl(146deg 100% 28%);
-  --green-darker: hsl(146deg 100% 24%);
+  --green-dark: hsl(146deg 100% 32%);
+  --green-darker: hsl(146deg 100% 29%);
   --default-transition: 250ms;
 }
 
@@ -17,7 +17,7 @@
 }
 
 body {
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 input,
@@ -82,8 +82,6 @@ button {
   padding: 10px;
   height: fit-content;
   border-radius: 5px;
-
-  /*!!!TEMPORARY!!!*/
   display: none;
 }
 .create-list-btn {
@@ -135,6 +133,67 @@ button {
   filter: contrast(0.9);
 }
 
+.create-card-container {
+  flex-direction: column;
+  display: inline-flex;
+  background: var(--white-default);
+  border-radius: 5px;
+  margin-bottom: 7px;
+
+  display: none;
+}
+.create-card-btn {
+  width: 85px;
+  border: none;
+  background-color: hsl(146deg 100% 36%);
+  border-radius: 3px;
+  height: 35px;
+  color: white;
+  font-size: 17px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: var(--default-transition);
+}
+.create-card-btn:hover {
+  background-color: var(--green-dark);
+}
+.create-card-btn:active {
+  background-color: var(--green-darker);
+}
+
+.create-card-controls {
+  display: flex;
+  align-items: center;
+}
+
+.create-card-input {
+  border: none;
+  border-radius: 3px;
+  padding: 13px;
+  min-height: 60px;
+  width: 100%;
+  resize: none;
+  outline: none;
+  font-family: "Roboto";
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+}
+
+.create-card-close {
+  width: 30px;
+  height: 30px;
+  margin-top: 9px;
+  margin-left: 8px;
+  cursor: pointer;
+  user-select: none;
+
+  filter: contrast(0.5);
+  transition: calc(var(--default-transition) - 100ms);
+}
+
+.create-card-close:hover {
+  filter: contrast(0.9);
+}
+
 .create-new-list-btn {
   height: fit-content;
   display: flex;
@@ -183,12 +242,12 @@ button {
 /*---Cards---*/
 .cards-container {
   min-height: 20px;
+  padding-top: 20px;
 }
 
 .card {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   background: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
@@ -202,15 +261,13 @@ button {
 .card:hover {
   background-color: hsl(0deg 0% 94.5%);
 }
-.card:first-child {
-  margin-top: 20px;
-}
 
 .card-text {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   font-weight: 400;
   user-select: none;
+  word-break: break-word;
 }
 
 .add-new-card {
@@ -254,6 +311,7 @@ button {
 /* Drag & Drop */
 .ui-sortable-helper {
   transform: rotate(4deg);
+  cursor: grabbing;
 }
 
 .ui-sortable-placeholder {
