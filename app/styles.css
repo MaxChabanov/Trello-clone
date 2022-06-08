@@ -319,9 +319,3 @@ button {
   background-color: hsla(228deg 54% 90% / 50%);
   visibility: visible !important;
 }
-
-/* Header Info And BG */
-
-.info-container {
-  position: absolute;
-}
