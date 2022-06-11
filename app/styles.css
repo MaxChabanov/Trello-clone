@@ -25,6 +25,10 @@ button {
   outline: none;
 }
 
+textarea {
+  font-family: "Roboto";
+}
+
 /*---Main---*/
 .taskboard-main {
   height: 100vh;
@@ -116,6 +120,9 @@ button {
   padding: 13px;
   height: 40px;
   width: 100%;
+  overflow-y: hidden;
+  outline: none;
+  resize: none;
 }
 
 .create-list-close {
@@ -247,7 +254,17 @@ button {
 }
 
 .delete-list {
-  width: 26px;
+  width: 22px;
+  cursor: pointer;
+  opacity: 0;
+  transition: calc(var(--default-transition) - 90ms);
+}
+.delete-list:hover {
+  filter: hue-rotate(17deg);
+}
+
+.list:hover > .list-head > .delete-list {
+  opacity: 1;
 }
 
 /*---Cards---*/
@@ -330,8 +347,20 @@ button {
   visibility: visible !important;
 }
 
-/* Header Info And BG */
+.delete-btn {
+  background: #cf0000 !important;
+  color: #fbfbfb !important;
+}
+.delete-btn:hover {
+  background: #c70000 !important;
+}
 
-.info-container {
-  position: absolute;
+.ui-button-icon {
+  left: 49% !important;
+  width: 100%;
+}
+.ui-button:active {
+  color: black !important;
+  background-color: transparent !important;
+  border: 1px solid #c5c5c5 !important;
 }

@@ -7,7 +7,7 @@ function updateSortable() {
 }
 updateSortable();
 
-$("textarea")
+$(".create-card-input")
   .each(function () {
     this.setAttribute(
       "style",
@@ -48,9 +48,12 @@ function updateCreateCards() {
 }
 updateCreateCards();
 
-$(".create-card-close").click(function () {
-  $(".create-card-container").hide();
-});
+function updateCreateCardClose() {
+  $(".create-card-close").click(function () {
+    $(".create-card-container").hide();
+  });
+}
+updateCreateCardClose();
 
 function animate() {
   $(".create-new-list-btn").click(function () {
@@ -60,7 +63,7 @@ function animate() {
       function () {
         $(".create-list-container").show();
         $(".create-list-container").animate(
-          { height: "100px", padding: "8px" },
+          { height: "105px", padding: "8px" },
           300
         );
 
@@ -98,8 +101,11 @@ function createListClick() {
 
       $(".taskboard-main").append(
         `
-  <div class="list">
-        <p class="list-title">${newListTitle}</p>
+    <div class="list" id="list${newListId}">
+        <div class="list-head">
+          <p class="list-title">${newListTitle}</p>
+          <img src="assets/delete.svg" alt="delete" class="delete-list" id="delete-list${newListId}"/>
+        </div>
 
         <div class="cards-container" id="card-container${newListId}">
     
@@ -138,6 +144,8 @@ function createListClick() {
 
       updateListCreationControls();
       animate();
+      updateCreateCardClose();
+      updateDeleteList();
     }
   });
 }
@@ -146,11 +154,12 @@ createListClick();
 function updateListCreationControls() {
   $(".taskboard-main").append(`
     <div class="create-list-container">
-        <input
+        <textarea
           type="text"
           class="create-list-input"
           placeholder="Enter list title"
-        />
+          maxlength="15"
+        ></textarea>
         <div class="create-list-controls">
           <button class="create-list-btn">Add list</button>
           <img src="assets/close.svg" alt="Close" class="create-list-close" />
@@ -168,3 +177,42 @@ function updateListCreationControls() {
 
   createListClick();
 }
+
+// Delete a list
+
+function updateDeleteList() {
+  $(".delete-list").click(function (event) {
+    let listId = event.target.id.slice(-1);
+    $(".delete-dialog").dialog({
+      autoOpen: false,
+      dialogClass: "no-close",
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      draggable: false,
+      show: { effect: "fade", duration: 150 },
+      hide: { effect: "fade", duration: 150 },
+      buttons: [
+        {
+          text: "Cancel",
+          click: function () {
+            $(this).dialog("close");
+          },
+        },
+        {
+          text: "OK",
+          class: "delete-btn",
+          click: function () {
+            $(this).dialog("close");
+            $(`#list${listId}`).remove();
+          },
+        },
+      ],
+    });
+
+    $(".delete-dialog").dialog("open");
+  });
+}
+
+updateDeleteList();
