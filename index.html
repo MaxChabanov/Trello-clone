@@ -50,8 +50,16 @@
 
     <!--Main-->
     <main class="taskboard-main">
-      <div class="list">
-        <p class="list-title">Needs to be done</p>
+      <div class="list" id="list1">
+        <div class="list-head">
+          <p class="list-title">Needs to be done</p>
+          <img
+            src="assets/delete.svg"
+            alt="delete"
+            class="delete-list"
+            id="delete-list1"
+          />
+        </div>
 
         <div class="cards-container" id="card-container1">
           <div class="card">
@@ -102,8 +110,16 @@
         </p>
       </div>
 
-      <div class="list">
-        <p class="list-title">Needs to be done</p>
+      <div class="list" id="list2">
+        <div class="list-head">
+          <p class="list-title">In Progress</p>
+          <img
+            src="assets/delete.svg"
+            alt="delete"
+            class="delete-list"
+            id="delete-list2"
+          />
+        </div>
 
         <div class="cards-container" id="card-container2">
           <div class="card">
@@ -154,8 +170,16 @@
         </p>
       </div>
 
-      <div class="list">
-        <p class="list-title">Needs to be done</p>
+      <div class="list" id="list3">
+        <div class="list-head">
+          <p class="list-title">Done</p>
+          <img
+            src="assets/delete.svg"
+            alt="delete"
+            class="delete-list"
+            id="delete-list3"
+          />
+        </div>
 
         <div class="cards-container" id="card-container3">
           <div class="card">
@@ -207,11 +231,12 @@
       </div>
 
       <div class="create-list-container">
-        <input
+        <textarea
           type="text"
           class="create-list-input"
           placeholder="Enter list title"
-        />
+          maxlength="15"
+        ></textarea>
         <div class="create-list-controls">
           <button class="create-list-btn">Add list</button>
           <img src="assets/close.svg" alt="Close" class="create-list-close" />
@@ -221,6 +246,14 @@
       <button class="create-new-list-btn">
         <span class="create-new-list-plus">+</span> Add new list
       </button>
+
+      <div
+        class="delete-dialog"
+        title="Delete this list?"
+        style="display: none"
+      >
+        <p>This list will be permanently deleted. Are you sure?</p>
+      </div>
     </main>
   </body>
 
@@ -232,6 +265,10 @@
     src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
     type="text/javascript"
   ></script>
+  <link
+    rel="stylesheet"
+    href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"
+  />
 
   <script type="text/javascript" src="app/script.js"></script>
 </html>
