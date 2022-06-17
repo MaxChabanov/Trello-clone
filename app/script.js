@@ -3,6 +3,15 @@ function updateSortable() {
     connectWith: ".cards-container",
     revert: true,
     revertDuration: 70,
+    cursor: "grabbing",
+  });
+  $(".lists-container").sortable({
+    connectWith: ".lists-container",
+    revert: true,
+    revertDuration: 70,
+    cancel:
+      ".create-list-btn, .create-list-container, .card, .create-card-container, .list-head",
+    cursor: "grabbing",
   });
 }
 updateSortable();
@@ -29,20 +38,43 @@ function updateCreateCards() {
   });
 
   $(".create-card-btn").click(function (event) {
+    event.target.id = event.target.id;
+
     let listId = event.target.id.slice(-1);
+    let cardId = $(`#card-container${listId}`).children().length + 1;
 
     let cardName = $(`#create-card-input${listId}`).val();
 
     if (cardName) {
       $(`#card-container${listId}`).append(
-        `<div class="card">
-      <span class="card-text">${cardName}</span>
-      <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-    </div>`
+        `<div class="card" id="card${cardId}-${listId}">
+              <textarea
+                type="text"
+                class="card-text-input"
+                id="input${cardId}-${listId}" 
+                maxlength="85"
+              ></textarea>
+
+              <span class="card-text" id="cardtext${cardId}-${listId}">${cardName}</span>
+              <img
+                src="assets/edit-pencil.svg"
+                class="card-edit"
+                alt="Edit"
+                id="edit${cardId}-${listId}"
+              />
+              <img
+                src="assets/tick.svg"
+                class="card-edit-close"
+                alt="Edit"
+                id="editclose${cardId}-${listId}"
+              />
+            </div>`
       );
 
       $(`#create-card-container${listId}`).hide();
       $(".create-card-input").val("");
+
+      updateCardEdit();
     }
   });
 }
@@ -64,6 +96,10 @@ function animate() {
         $(".create-list-container").show();
         $(".create-list-container").animate(
           { height: "105px", padding: "8px" },
+          300
+        );
+        $(".create-new-list-btn").animate(
+          { height: "50px", padding: "10px" },
           300
         );
 
@@ -96,10 +132,7 @@ function createListClick() {
     let newListId = $(".list").length + 1;
 
     if (newListTitle) {
-      $(".create-new-list-btn").remove();
-      $(".create-list-container").remove();
-
-      $(".taskboard-main").append(
+      $(".lists-container").append(
         `
     <div class="list" id="list${newListId}">
         <div class="list-head">
@@ -139,10 +172,12 @@ function createListClick() {
   `
       );
 
+      $(".create-list-container").hide();
+      $(".create-new-list-btn").show();
+
       updateSortable();
       updateCreateCards();
 
-      updateListCreationControls();
       animate();
       updateCreateCardClose();
       updateDeleteList();
@@ -150,33 +185,6 @@ function createListClick() {
   });
 }
 createListClick();
-
-function updateListCreationControls() {
-  $(".taskboard-main").append(`
-    <div class="create-list-container">
-        <textarea
-          type="text"
-          class="create-list-input"
-          placeholder="Enter list title"
-          maxlength="15"
-        ></textarea>
-        <div class="create-list-controls">
-          <button class="create-list-btn">Add list</button>
-          <img src="assets/close.svg" alt="Close" class="create-list-close" />
-        </div>
-      </div>
-  `);
-  $(".taskboard-main").append(`
-      <button class="create-new-list-btn">
-        <span class="create-new-list-plus">+</span> Add new list
-      </button>
-  `);
-
-  $(".create-new-list-btn").css({ height: "50px", padding: "10px" });
-  $(".create-list-container").hide();
-
-  createListClick();
-}
 
 // Delete a list
 
@@ -216,3 +224,94 @@ function updateDeleteList() {
 }
 
 updateDeleteList();
+
+// Editing a card
+isEditing = false;
+
+function updateCardEdit() {
+  $(".card-edit").click(function (event) {
+    if (isEditing == false) {
+      isEditing = true;
+
+      let cardId = event.target.id.slice(-3, -2);
+      let listId = event.target.id.slice(-1);
+      console.log(`${cardId}`);
+
+      $(".cards-container").sortable("disable");
+      $(`#input${cardId}-${listId}`).show();
+      $(`#cardtext${cardId}-${listId}`).hide();
+
+      $(`#input${cardId}-${listId}`).val(
+        $(`#cardtext${cardId}-${listId}`).text()
+      );
+
+      $(".card-edit").css(
+        "filter",
+        "invert(30%) sepia(98%) saturate(1356%) hue-rotate(341deg) brightness(94%) contrast(111%)"
+      );
+
+      $(`#editclose${cardId}-${listId}`).css({
+        filter: "none",
+        width: "25px",
+        height: "25px",
+        "background-color": "hsl(312deg 100% 64%)",
+        "border-radius": "20px",
+        filter: "invert(1)",
+      });
+
+      $(`#editclose${cardId}-${listId}`).show();
+      $(`#edit${cardId}-${listId}`).hide();
+
+      $(`#editclose${cardId}-${listId}`).click(function () {
+        if ($(`#input${cardId}-${listId}`).val()) {
+          $(`#cardtext${cardId}-${listId}`).text(
+            $(`#input${cardId}-${listId}`).val()
+          );
+          $(`#cardtext${cardId}-${listId}`).show();
+          $(`#input${cardId}-${listId}`).hide();
+
+          $(".card-edit-close").hide();
+          $(".card-edit").show();
+
+          $(".card-edit").css("filter", "none");
+
+          $(".cards-container").sortable("enable");
+
+          isEditing = false;
+        } else {
+          $(`#card${cardId}-${listId}`).remove();
+        }
+      });
+    }
+  });
+}
+
+updateCardEdit();
+
+// Editing list title
+function updateListEdit() {
+  $(".list-title").keydown(function (event) {
+    if ($(".list-title").text().length > 30 && event.keyCode != 8) {
+      $(".list-title").attr("contenteditable", "false");
+      $(".list-title").attr("contenteditable", "true");
+    }
+  });
+}
+
+updateListEdit();
+
+// Setting background
+document.getElementById("getval").addEventListener("change", readURL, true);
+
+function readURL() {
+  var file = document.getElementById("getval").files[0];
+  var reader = new FileReader();
+  reader.onloadend = function () {
+    document.getElementById("clock").style.backgroundImage =
+      "url(" + reader.result + ")";
+  };
+  if (file) {
+    reader.readAsDataURL(file);
+  } else {
+  }
+}

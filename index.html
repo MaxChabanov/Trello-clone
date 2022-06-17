@@ -39,195 +39,75 @@
         <span class="logo-text">TaskUp</span>
       </div>
       <div class="bg-container">
-        <img
-          src="assets/bg-icon.svg"
-          alt="ChangeBackground"
-          class="bg-icon"
-          draggable="false"
-        />
+        <label for="avatar" class="bg-icon"></label>
+        <input id="avatar" type="file" style="display: none" />
       </div>
     </header>
 
     <!--Main-->
     <main class="taskboard-main">
-      <div class="list" id="list1">
-        <div class="list-head">
-          <p class="list-title">Needs to be done</p>
-          <img
-            src="assets/delete.svg"
-            alt="delete"
-            class="delete-list"
-            id="delete-list1"
-          />
-        </div>
-
-        <div class="cards-container" id="card-container1">
-          <div class="card">
-            <span class="card-text">Task №1</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 2</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 3</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 4</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 5</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-        </div>
-
-        <div class="create-card-container" id="create-card-container1">
-          <textarea
-            type="text"
-            id="create-card-input1"
-            class="create-card-input"
-            maxlength="100"
-            placeholder="Enter card title"
-          ></textarea>
-          <div class="create-card-controls">
-            <button class="create-card-btn" id="create-card-btn1">
-              Add card
-            </button>
+      <div class="lists-container">
+        <div class="list" id="list1">
+          <div class="list-head">
+            <p class="list-title" contenteditable="true">Needs to be done</p>
             <img
-              src="assets/close.svg"
-              alt="Close"
-              draggable="false"
-              class="create-card-close"
+              src="assets/delete.svg"
+              alt="delete"
+              class="delete-list"
+              id="delete-list1"
             />
           </div>
+
+          <div class="cards-container" id="card-container1">
+            <div class="card" id="card1-1">
+              <textarea
+                type="text"
+                class="card-text-input"
+                id="input1-1"
+                maxlength="85"
+              ></textarea>
+
+              <span class="card-text" id="cardtext1-1">Task №1</span>
+              <img
+                src="assets/tick.svg"
+                class="card-edit-close"
+                alt="Edit"
+                id="editclose1-1"
+              />
+              <img
+                src="assets/edit-pencil.svg"
+                class="card-edit"
+                alt="Edit"
+                id="edit1-1"
+              />
+            </div>
+          </div>
+
+          <div class="create-card-container" id="create-card-container1">
+            <textarea
+              type="text"
+              id="create-card-input1"
+              class="create-card-input"
+              maxlength="100"
+              placeholder="Enter card title"
+            ></textarea>
+            <div class="create-card-controls">
+              <button class="create-card-btn" id="create-card-btn1-1">
+                Add card
+              </button>
+              <img
+                src="assets/close.svg"
+                alt="Close"
+                draggable="false"
+                class="create-card-close"
+              />
+            </div>
+          </div>
+
+          <p class="add-new-card" id="add-new-card1">
+            <span class="add-new-card-plus">+</span> Add new card
+          </p>
         </div>
-
-        <p class="add-new-card" id="add-new-card1">
-          <span class="add-new-card-plus">+</span> Add new card
-        </p>
-      </div>
-
-      <div class="list" id="list2">
-        <div class="list-head">
-          <p class="list-title">In Progress</p>
-          <img
-            src="assets/delete.svg"
-            alt="delete"
-            class="delete-list"
-            id="delete-list2"
-          />
-        </div>
-
-        <div class="cards-container" id="card-container2">
-          <div class="card">
-            <span class="card-text">Task №1</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 2</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 3</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 4</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 5</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-        </div>
-
-        <div class="create-card-container" id="create-card-container2">
-          <textarea
-            type="text"
-            id="create-card-input2"
-            class="create-card-input"
-            maxlength="100"
-            placeholder="Enter card title"
-          ></textarea>
-          <div class="create-card-controls">
-            <button class="create-card-btn" id="create-card-btn2">
-              Add card
-            </button>
-            <img
-              src="assets/close.svg"
-              alt="Close"
-              draggable="false"
-              class="create-card-close"
-            />
-          </div>
-        </div>
-
-        <p class="add-new-card" id="add-new-card2">
-          <span class="add-new-card-plus">+</span> Add new card
-        </p>
-      </div>
-
-      <div class="list" id="list3">
-        <div class="list-head">
-          <p class="list-title">Done</p>
-          <img
-            src="assets/delete.svg"
-            alt="delete"
-            class="delete-list"
-            id="delete-list3"
-          />
-        </div>
-
-        <div class="cards-container" id="card-container3">
-          <div class="card">
-            <span class="card-text">Task №1</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 2</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 3</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 4</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-          <div class="card">
-            <span class="card-text">Task 5</span>
-            <img src="assets/edit-pencil.svg" class="card-edit" alt="Edit" />
-          </div>
-        </div>
-
-        <div class="create-card-container" id="create-card-container3">
-          <textarea
-            type="text"
-            id="create-card-input3"
-            class="create-card-input"
-            maxlength="100"
-            placeholder="Enter card title"
-          ></textarea>
-          <div class="create-card-controls">
-            <button class="create-card-btn" id="create-card-btn3">
-              Add card
-            </button>
-            <img
-              src="assets/close.svg"
-              alt="Close"
-              draggable="false"
-              class="create-card-close"
-            />
-          </div>
-        </div>
-
-        <p class="add-new-card" id="add-new-card3">
-          <span class="add-new-card-plus">+</span> Add new card
-        </p>
       </div>
 
       <div class="create-list-container">
