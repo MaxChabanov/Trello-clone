@@ -37,6 +37,8 @@ textarea {
   display: flex;
   padding: 131px 25px 0;
   background: var(--bg-color-dark);
+  background-position: 50%;
+  background-size: cover;
 }
 
 /*---Header---*/
@@ -212,7 +214,7 @@ textarea {
   height: fit-content;
   display: flex;
   align-items: center;
-  background: hsla(0, 0%, 100%, 0.14);
+  background: hsl(0deg 0% 22%);
   border: none;
   border-radius: 5px;
   padding: 12px 10px;
@@ -222,10 +224,10 @@ textarea {
   cursor: pointer;
 }
 .create-new-list-btn:hover {
-  background: hsl(0deg 0% 100% / 11%);
+  background: hsl(0deg 0% 22% / 82%);
 }
 .create-new-list-btn:active {
-  background: hsl(0deg 0% 100% / 9%);
+  background: hsl(0deg 0% 22% / 80%);
 }
 
 .create-new-list-plus {
