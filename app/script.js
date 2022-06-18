@@ -301,17 +301,21 @@ function updateListEdit() {
 updateListEdit();
 
 // Setting background
-document.getElementById("getval").addEventListener("change", readURL, true);
-
-function readURL() {
-  var file = document.getElementById("getval").files[0];
+$("#avatar-input").change(function () {
+  var file = $("#avatar-input")[0].files[0];
   var reader = new FileReader();
   reader.onloadend = function () {
-    document.getElementById("clock").style.backgroundImage =
-      "url(" + reader.result + ")";
+    $(".taskboard-main").css(
+      "background-image",
+      'url("' + reader.result + '")'
+    );
   };
   if (file) {
     reader.readAsDataURL(file);
   } else {
+    $(".taskboard-main").css(
+      "background-color",
+      "radial-gradient(#292929, #191818);"
+    );
   }
-}
+});
