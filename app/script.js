@@ -75,6 +75,8 @@ function updateCreateCards() {
       $(".create-card-input").val("");
 
       updateCardEdit();
+
+      localStorage.setItem(`list${listId}`, $(`#list${listId}`).html());
     }
   });
 }
@@ -114,12 +116,12 @@ function animate() {
       300,
       function () {
         $(".create-list-container").hide();
+        $(".create-new-list-btn").show();
 
         $(".create-new-list-btn").animate(
           { height: "50px", padding: "10px" },
           300
         );
-        $(".create-new-list-btn").show();
       }
     );
   });
@@ -129,7 +131,13 @@ animate();
 function createListClick() {
   $(".create-list-btn").click(function () {
     let newListTitle = $(".create-list-input").val();
-    let newListId = $(".list").length + 1;
+    let newListId = 0;
+
+    if ($(".list").children().last().length) {
+      newListId = +$(".list").children().last().attr("id").slice(-1) + 1;
+    } else {
+      newListId = 1;
+    }
 
     if (newListTitle) {
       $(".lists-container").append(
@@ -181,6 +189,8 @@ function createListClick() {
       animate();
       updateCreateCardClose();
       updateDeleteList();
+
+      localStorage.setItem(`list${newListId}`, $(`#list${newListId}`).html());
     }
   });
 }
@@ -214,6 +224,8 @@ function updateDeleteList() {
           click: function () {
             $(this).dialog("close");
             $(`#list${listId}`).remove();
+
+            localStorage.removeItem(`list${listId}`);
           },
         },
       ],
@@ -235,7 +247,6 @@ function updateCardEdit() {
 
       let cardId = event.target.id.slice(-3, -2);
       let listId = event.target.id.slice(-1);
-      console.log(`${cardId}`);
 
       $(".cards-container").sortable("disable");
       $(`#input${cardId}-${listId}`).show();
@@ -279,7 +290,12 @@ function updateCardEdit() {
 
           isEditing = false;
         } else {
+          $(".card-edit").css("filter", "none");
+
+          $(".cards-container").sortable("enable");
+
           $(`#card${cardId}-${listId}`).remove();
+          isEditing = false;
         }
       });
     }
