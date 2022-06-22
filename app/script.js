@@ -141,42 +141,7 @@ function createListClick() {
 
     if (newListTitle) {
       $(".lists-container").append(
-        `
-    <div class="list" id="list${newListId}">
-        <div class="list-head">
-          <p class="list-title">${newListTitle}</p>
-          <img src="assets/delete.svg" alt="delete" class="delete-list" id="delete-list${newListId}"/>
-        </div>
-
-        <div class="cards-container" id="card-container${newListId}">
-    
-        </div>
-
-        <div class="create-card-container" id="create-card-container${newListId}">
-          <textarea
-            type="text"
-            id="create-card-input${newListId}"
-            class="create-card-input"
-            maxlength="100"
-            placeholder="Enter card title"
-          ></textarea>
-          <div class="create-card-controls">
-            <button class="create-card-btn"  id="create-card-btn${newListId}">
-              Add card
-            </button>
-            <img
-              src="assets/close.svg"
-              alt="Close"
-              draggable="false"
-              class="create-card-close"
-            />
-          </div>
-        </div>
-
-        <p class="add-new-card" id="add-new-card${newListId}">
-          <span class="add-new-card-plus">+</span> Add new card
-        </p>
-      </div>
+        `<div class="list" id="list${newListId}"><div class="list-head"><p class="list-title" contenteditable="true" id="title${newListId}>Needs to be done</p><imgsrc="assets/delete.svg"alt="delete"class="delete-list"              id="delete-list${newListId}            />          </div>          <div class="cards-container" id="cards-container${newListId}>                      </div>          <div class="create-card-container" id="create-card-container${newListId}>            <textarea              type="text"              id="create-card-input${newListId}              class="create-card-input"              maxlength="100"              placeholder="Enter card title"            ></textarea>            <div class="create-card-controls">              <button class="create-card-btn" id="create-card-btn1-${newListId}>                Add card              </button>              <img                src="assets/close.svg"                alt="Close"                draggable="false"                class="create-card-close"              />            </div>          </div>          <p class="add-new-card" id="add-new-card${newListId}>            <span class="add-new-card-plus">+</span> Add new card          </p>        </div>
   `
       );
 
@@ -289,6 +254,8 @@ function updateCardEdit() {
           $(".cards-container").sortable("enable");
 
           isEditing = false;
+
+          localStorage.setItem(`list${listId}`, $(`#list${listId}`).html());
         } else {
           $(".card-edit").css("filter", "none");
 
@@ -296,6 +263,8 @@ function updateCardEdit() {
 
           $(`#card${cardId}-${listId}`).remove();
           isEditing = false;
+
+          localStorage.setItem(`list${listId}`, $(`#list${listId}`).html());
         }
       });
     }
@@ -307,9 +276,15 @@ updateCardEdit();
 // Editing list title
 function updateListEdit() {
   $(".list-title").keydown(function (event) {
-    if ($(".list-title").text().length > 30 && event.keyCode != 8) {
-      $(".list-title").attr("contenteditable", "false");
-      $(".list-title").attr("contenteditable", "true");
+    let listId = event.target.id.slice(-1);
+    console.log($(`#title${listId}`).text());
+
+    if ($(`#title${listId}`).text().length > 30 && event.keyCode != 8) {
+      console.log("A");
+      $(`#title${listId}`).attr("contenteditable", "false");
+      $(`#title${listId}`).attr("contenteditable", "true");
+
+      localStorage.setItem(`list${listId}`, $(`#list${listId}`).html());
     }
   });
 }
