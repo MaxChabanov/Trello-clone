@@ -1,12 +1,4 @@
-for (let inputIndex = 0; inputIndex < localStorage.length; inputIndex++) {
-  console.log(localStorage.key(inputIndex));
-
-  console.log(inputIndex);
-
-  $(`.lists-container`).append(
-    localStorage.getItem(localStorage.key(inputIndex))
-  );
-}
+$(`.lists-container`).append(localStorage.getItem("lists-container"));
 
 function updateSortable() {
   $(".cards-container").sortable({
@@ -14,14 +6,12 @@ function updateSortable() {
     revert: true,
     revertDuration: 70,
     cursor: "grabbing",
-  });
-  $(".lists-container").sortable({
-    connectWith: ".lists-container",
-    revert: true,
-    revertDuration: 70,
-    cancel:
-      ".create-list-btn, .create-list-container, .card, .create-card-container, .list-head",
-    cursor: "grabbing",
+    stop: function () {
+      localStorage.setItem(
+        `lists-container`,
+        $(`.lists-container`).prop("innerHTML")
+      );
+    },
   });
 }
 updateSortable();
@@ -90,6 +80,11 @@ function updateCreateCards() {
         `list${listId}`,
         $(`#list${listId}`).prop("outerHTML")
       );
+
+      localStorage.setItem(
+        `lists-container`,
+        $(`.lists-container`).prop("innerHTML")
+      );
     }
   });
 }
@@ -113,12 +108,13 @@ function animate() {
           { height: "105px", padding: "8px" },
           300
         );
-        $(".create-new-list-btn").animate(
-          { height: "50px", padding: "10px" },
-          300
-        );
 
         $(".create-new-list-btn").hide();
+
+        $(".create-list-btn").click(function () {
+          $(".create-new-list-btn").css({ height: "50px", padding: "10px" });
+          $(".create-list-container").css({ height: "0", padding: "0" });
+        });
       }
     );
   });
@@ -208,7 +204,16 @@ function createListClick() {
       updateDeleteList();
       updateListEdit();
 
-      localStorage.setItem(`list${newListId}`, $(`#list${newListId}`).html());
+      localStorage.setItem(
+        `list${newListId}`,
+        $(`#list${newListId}`).prop("outerHTML")
+      );
+      localStorage.setItem(
+        `lists-container`,
+        $(`.lists-container`).prop("innerHTML")
+      );
+
+      $(".create-list-input").val("");
     }
   });
 }
@@ -244,6 +249,10 @@ function updateDeleteList() {
             $(`#list${listId}`).remove();
 
             localStorage.removeItem(`list${listId}`);
+            localStorage.setItem(
+              `lists-container`,
+              $(`.lists-container`).prop("innerHTML")
+            );
           },
         },
       ],
@@ -312,6 +321,10 @@ function updateCardEdit() {
             `list${listId}`,
             $(`#list${listId}`).prop("outerHTML")
           );
+          localStorage.setItem(
+            `lists-container`,
+            $(`.lists-container`).prop("innerHTML")
+          );
         } else {
           $(".card-edit").css("filter", "none");
 
@@ -323,6 +336,10 @@ function updateCardEdit() {
           localStorage.setItem(
             `list${listId}`,
             $(`#list${listId}`).prop("outerHTML")
+          );
+          localStorage.setItem(
+            `lists-container`,
+            $(`.lists-container`).prop("innerHTML")
           );
         }
       });
@@ -336,16 +353,18 @@ updateCardEdit();
 function updateListEdit() {
   $(".list-title").keydown(function (event) {
     let listId = event.target.id.slice(-1);
-    console.log($(`#title${listId}`).text());
 
     if ($(`#title${listId}`).text().length > 30 && event.keyCode != 8) {
-      console.log("A");
       $(`#title${listId}`).attr("contenteditable", "false");
       $(`#title${listId}`).attr("contenteditable", "true");
     }
     localStorage.setItem(
       `list${listId}`,
       $(`#list${listId}`).prop("outerHTML")
+    );
+    localStorage.setItem(
+      `lists-container`,
+      $(`.lists-container`).prop("innerHTML")
     );
   });
 }
