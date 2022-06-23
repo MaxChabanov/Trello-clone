@@ -1,17 +1,17 @@
+$(`.lists-container`).append(localStorage.getItem("lists-container"));
+
 function updateSortable() {
   $(".cards-container").sortable({
     connectWith: ".cards-container",
     revert: true,
     revertDuration: 70,
     cursor: "grabbing",
-  });
-  $(".lists-container").sortable({
-    connectWith: ".lists-container",
-    revert: true,
-    revertDuration: 70,
-    cancel:
-      ".create-list-btn, .create-list-container, .card, .create-card-container, .list-head",
-    cursor: "grabbing",
+    stop: function () {
+      localStorage.setItem(
+        `lists-container`,
+        $(`.lists-container`).prop("innerHTML")
+      );
+    },
   });
 }
 updateSortable();
@@ -75,6 +75,16 @@ function updateCreateCards() {
       $(".create-card-input").val("");
 
       updateCardEdit();
+
+      localStorage.setItem(
+        `list${listId}`,
+        $(`#list${listId}`).prop("outerHTML")
+      );
+
+      localStorage.setItem(
+        `lists-container`,
+        $(`.lists-container`).prop("innerHTML")
+      );
     }
   });
 }
@@ -98,12 +108,13 @@ function animate() {
           { height: "105px", padding: "8px" },
           300
         );
-        $(".create-new-list-btn").animate(
-          { height: "50px", padding: "10px" },
-          300
-        );
 
         $(".create-new-list-btn").hide();
+
+        $(".create-list-btn").click(function () {
+          $(".create-new-list-btn").css({ height: "50px", padding: "10px" });
+          $(".create-list-container").css({ height: "0", padding: "0" });
+        });
       }
     );
   });
@@ -114,12 +125,12 @@ function animate() {
       300,
       function () {
         $(".create-list-container").hide();
+        $(".create-new-list-btn").show();
 
         $(".create-new-list-btn").animate(
           { height: "50px", padding: "10px" },
           300
         );
-        $(".create-new-list-btn").show();
       }
     );
   });
@@ -129,48 +140,58 @@ animate();
 function createListClick() {
   $(".create-list-btn").click(function () {
     let newListTitle = $(".create-list-input").val();
-    let newListId = $(".list").length + 1;
+    let newListId = 0;
+
+    if ($(".list").children().last().length) {
+      newListId = +$(".list").children().last().attr("id").slice(-1) + 1;
+    } else {
+      newListId = 1;
+    }
 
     if (newListTitle) {
-      $(".lists-container").append(
-        `
-    <div class="list" id="list${newListId}">
-        <div class="list-head">
-          <p class="list-title">${newListTitle}</p>
-          <img src="assets/delete.svg" alt="delete" class="delete-list" id="delete-list${newListId}"/>
-        </div>
-
-        <div class="cards-container" id="card-container${newListId}">
-    
-        </div>
-
-        <div class="create-card-container" id="create-card-container${newListId}">
-          <textarea
-            type="text"
-            id="create-card-input${newListId}"
-            class="create-card-input"
-            maxlength="100"
-            placeholder="Enter card title"
-          ></textarea>
-          <div class="create-card-controls">
-            <button class="create-card-btn"  id="create-card-btn${newListId}">
-              Add card
-            </button>
+      $(".lists-container").append(`
+        <div class="list" id="list${newListId}">
+          <div class="list-head">
+            <p class="list-title" contenteditable="true" id="title${newListId}">
+              ${newListTitle}
+            </p>
             <img
-              src="assets/close.svg"
-              alt="Close"
-              draggable="false"
-              class="create-card-close"
+              src="assets/delete.svg"
+              alt="delete"
+              class="delete-list"
+              id="delete-list${newListId}"
             />
           </div>
-        </div>
 
-        <p class="add-new-card" id="add-new-card${newListId}">
-          <span class="add-new-card-plus">+</span> Add new card
-        </p>
-      </div>
-  `
-      );
+          <div class="cards-container" id="card-container${newListId}">
+            
+          </div>
+
+          <div class="create-card-container" id="create-card-container${newListId}">
+            <textarea
+              type="text"
+              id="create-card-input${newListId}"
+              class="create-card-input"
+              maxlength="100"
+              placeholder="Enter card title"
+            ></textarea>
+            <div class="create-card-controls">
+              <button class="create-card-btn" id="create-card-btn${newListId}">
+                Add card
+              </button>
+              <img
+                src="assets/close.svg"
+                alt="Close"
+                draggable="false"
+                class="create-card-close"
+              />
+            </div>
+          </div>
+
+          <p class="add-new-card" id="add-new-card${newListId}">
+            <span class="add-new-card-plus">+</span> Add new card
+          </p>
+        </div>`);
 
       $(".create-list-container").hide();
       $(".create-new-list-btn").show();
@@ -181,6 +202,18 @@ function createListClick() {
       animate();
       updateCreateCardClose();
       updateDeleteList();
+      updateListEdit();
+
+      localStorage.setItem(
+        `list${newListId}`,
+        $(`#list${newListId}`).prop("outerHTML")
+      );
+      localStorage.setItem(
+        `lists-container`,
+        $(`.lists-container`).prop("innerHTML")
+      );
+
+      $(".create-list-input").val("");
     }
   });
 }
@@ -214,6 +247,12 @@ function updateDeleteList() {
           click: function () {
             $(this).dialog("close");
             $(`#list${listId}`).remove();
+
+            localStorage.removeItem(`list${listId}`);
+            localStorage.setItem(
+              `lists-container`,
+              $(`.lists-container`).prop("innerHTML")
+            );
           },
         },
       ],
@@ -235,7 +274,6 @@ function updateCardEdit() {
 
       let cardId = event.target.id.slice(-3, -2);
       let listId = event.target.id.slice(-1);
-      console.log(`${cardId}`);
 
       $(".cards-container").sortable("disable");
       $(`#input${cardId}-${listId}`).show();
@@ -278,8 +316,31 @@ function updateCardEdit() {
           $(".cards-container").sortable("enable");
 
           isEditing = false;
+
+          localStorage.setItem(
+            `list${listId}`,
+            $(`#list${listId}`).prop("outerHTML")
+          );
+          localStorage.setItem(
+            `lists-container`,
+            $(`.lists-container`).prop("innerHTML")
+          );
         } else {
+          $(".card-edit").css("filter", "none");
+
+          $(".cards-container").sortable("enable");
+
           $(`#card${cardId}-${listId}`).remove();
+          isEditing = false;
+
+          localStorage.setItem(
+            `list${listId}`,
+            $(`#list${listId}`).prop("outerHTML")
+          );
+          localStorage.setItem(
+            `lists-container`,
+            $(`.lists-container`).prop("innerHTML")
+          );
         }
       });
     }
@@ -291,10 +352,20 @@ updateCardEdit();
 // Editing list title
 function updateListEdit() {
   $(".list-title").keydown(function (event) {
-    if ($(".list-title").text().length > 30 && event.keyCode != 8) {
-      $(".list-title").attr("contenteditable", "false");
-      $(".list-title").attr("contenteditable", "true");
+    let listId = event.target.id.slice(-1);
+
+    if ($(`#title${listId}`).text().length > 30 && event.keyCode != 8) {
+      $(`#title${listId}`).attr("contenteditable", "false");
+      $(`#title${listId}`).attr("contenteditable", "true");
     }
+    localStorage.setItem(
+      `list${listId}`,
+      $(`#list${listId}`).prop("outerHTML")
+    );
+    localStorage.setItem(
+      `lists-container`,
+      $(`.lists-container`).prop("innerHTML")
+    );
   });
 }
 

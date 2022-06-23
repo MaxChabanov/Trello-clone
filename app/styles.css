@@ -1,4 +1,4 @@
-/*---Root & All---*/
+/*---General---*/
 :root {
   --bg-color-dark: radial-gradient(#292929, #191818);
   --header-color-dark: linear-gradient(#979797, #4e4e4e);
@@ -27,6 +27,31 @@ button {
 
 textarea {
   font-family: "Roboto";
+}
+
+/*---Scrollbar---*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--green-default);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--green-dark);
+}
+
+::-webkit-scrollbar-track:horizontal {
+  background: var(--bg-color-dark);
 }
 
 /*---Main---*/
@@ -191,7 +216,9 @@ textarea {
   resize: none;
   outline: none;
   font-family: "Roboto";
-  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  border: 2px hsl(0deg 0% 0% / 25%) solid;
+  box-shadow: 0px 4px 4px hsl(0deg 0% 0% / 25%);
+  border-bottom: none;
 }
 
 .create-card-close {
@@ -219,7 +246,7 @@ textarea {
   border-radius: 5px;
   padding: 12px 10px;
   width: 300px;
-  min-width: 130px;
+  min-width: 280px;
   color: var(--white-default);
   cursor: pointer;
 }
@@ -248,6 +275,8 @@ textarea {
   padding: 21px 17px 15px 17px;
   margin-right: 25px;
   max-width: 550px;
+  overflow-y: visible;
+  max-height: 600px;
 }
 
 .list-title {
@@ -284,8 +313,9 @@ textarea {
 
 /*---Cards---*/
 .cards-container {
+  margin-top: 20px;
+  overflow-y: auto;
   min-height: 20px;
-  padding-top: 20px;
 }
 
 .card {
