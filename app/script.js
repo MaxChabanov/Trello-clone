@@ -386,7 +386,6 @@ $("#avatar-input").change(function () {
   var reader = new FileReader();
 
   reader.onloadend = function () {
-    console.log(reader.result);
     $(".taskboard-main").css(
       "background-image",
       'url("' + reader.result + '")'
