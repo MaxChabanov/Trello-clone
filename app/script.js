@@ -1,5 +1,12 @@
 $(`.lists-container`).append(localStorage.getItem("lists-container"));
 
+if (localStorage.getItem("bg-image")) {
+  $(".taskboard-main").css(
+    "background-image",
+    'url("' + localStorage.getItem("bg-image") + '")'
+  );
+}
+
 function updateSortable() {
   $(".cards-container").sortable({
     connectWith: ".cards-container",
@@ -112,8 +119,10 @@ function animate() {
         $(".create-new-list-btn").hide();
 
         $(".create-list-btn").click(function () {
-          $(".create-new-list-btn").css({ height: "50px", padding: "10px" });
-          $(".create-list-container").css({ height: "0", padding: "0" });
+          if ($(".create-list-input").val()) {
+            $(".create-new-list-btn").css({ height: "50px", padding: "10px" });
+            $(".create-list-container").css({ height: "0", padding: "0" });
+          }
         });
       }
     );
@@ -375,11 +384,14 @@ updateListEdit();
 $("#avatar-input").change(function () {
   var file = $("#avatar-input")[0].files[0];
   var reader = new FileReader();
+
   reader.onloadend = function () {
     $(".taskboard-main").css(
       "background-image",
       'url("' + reader.result + '")'
     );
+
+    localStorage.setItem("bg-image", reader.result);
   };
   if (file) {
     reader.readAsDataURL(file);
