@@ -119,10 +119,10 @@ function animate() {
         $(".create-new-list-btn").hide();
 
         $(".create-list-btn").click(function () {
-          if ($(".create-list-input").val()) {
-            $(".create-new-list-btn").css({ height: "50px", padding: "10px" });
-            $(".create-list-container").css({ height: "0", padding: "0" });
-          }
+          $(".create-new-list-btn").css({ height: "50px", padding: "10px" });
+          $(".create-list-container").css({ height: "0", padding: "0" });
+          $(".create-new-list-btn").show();
+          $(".create-list-container").hide();
         });
       }
     );
