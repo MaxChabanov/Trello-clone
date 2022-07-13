@@ -1,2 +1,1 @@
-# TaskUp
-A taskboard project
+Just a trello clone
